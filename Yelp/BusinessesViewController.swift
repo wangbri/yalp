@@ -104,7 +104,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D, business: Business) {
         business.annotation = MKPointAnnotation()
         business.annotation!.coordinate = coordinate
-        business.annotation!.title = title
+        business.annotation!.title = business.name
         //self.mapViewSet(mapView, viewForAnnotation: business.annotation!, business: business )
         self.mapView.addAnnotation(business.annotation!)
         //print("ISITWORKING")
