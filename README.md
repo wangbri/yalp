@@ -25,7 +25,7 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. Add feature for pin to animate down when a cell is selected for it.
+1. Adding feature for pin to animate down when a cell is selected for it.
 2. Adding photos for MKMapAnnotations
 
 ## Video Walkthrough 
@@ -39,6 +39,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+
 Had issues with setting the image for MKMapAnnotations.
 
 ## License
