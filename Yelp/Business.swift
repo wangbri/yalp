@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class Business: NSObject {
     let name: String?
@@ -16,6 +17,10 @@ class Business: NSObject {
     let distance: String?
     let ratingImageURL: NSURL?
     let reviewCount: NSNumber?
+    var latitude: CLLocationDegrees = 0.0
+    var longitude: CLLocationDegrees = 0.0
+    var geoLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+    var annotation: MKPointAnnotation?
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
@@ -33,6 +38,14 @@ class Business: NSObject {
             let addressArray = location!["address"] as? NSArray
             if addressArray != nil && addressArray!.count > 0 {
                 address = addressArray![0] as! String
+            }
+            
+            let coordinate = location!["coordinate"] as? NSDictionary
+            if coordinate != nil {
+                latitude = coordinate!["latitude"] as! Double
+                longitude = coordinate!["longitude"] as! Double
+                self.geoLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                print(geoLocation)
             }
             
             let neighborhoods = location!["neighborhoods"] as? NSArray
@@ -71,6 +84,20 @@ class Business: NSObject {
         } else {
             ratingImageURL = nil
         }
+        
+        /*if let _ = dictionary["location.coordinate.latitude"]
+        {
+            latitude = dictionary["location.coordinate.latitude"] as! CLLocationDegrees
+            print("itworked")
+        }
+        
+        if let _ = dictionary["location.coordinate.longitude"]
+        {
+            longitude = dictionary["location.coordinate.longitude"] as! CLLocationDegrees
+        }
+    
+        
+        geoLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)*/
         
         reviewCount = dictionary["review_count"] as? NSNumber
     }

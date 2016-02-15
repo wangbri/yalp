@@ -14,15 +14,18 @@
                         <viewControllerLayoutGuide type="bottom" id="sWK-FJ-YYq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XhR-oz-92f">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QqX-gD-lEX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                            </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="122" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hGY-1P-cqf">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BusinessCell" rowHeight="122" id="p6M-V6-EIH" customClass="BusinessCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="122"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="122"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p6M-V6-EIH" id="Hgz-lT-bjE">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
@@ -126,6 +129,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Yelp" id="rfv-EX-hu1"/>
                     <connections>
+                        <outlet property="mapView" destination="QqX-gD-lEX" id="jhC-Vb-aRT"/>
                         <outlet property="tableView" destination="hGY-1P-cqf" id="AtX-7g-nLB"/>
                     </connections>
                 </viewController>
@@ -138,9 +142,11 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QBC-8e-g0R" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KBd-b8-BRr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="KBd-b8-BRr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="1" green="0.17988952407939818" blue="0.20893318137019823" alpha="0.94485452586206897" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="1" green="0.1798895241" blue="0.2089331814" alpha="0.94485452589999996" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

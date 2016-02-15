@@ -11,7 +11,7 @@ import MapKit
 
 
 class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate
-, UIScrollViewDelegate{
+, UIScrollViewDelegate, MKMapViewDelegate{
 
     var businesses: [Business]!
     
@@ -29,10 +29,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     var limit = 10
     
+    //weak var thumb: UIImageView?
+    
+    @IBOutlet weak var mapView: MKMapView!
+    
     //@IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.mapView.alpha = 0.0
         
         self.searchBar.sizeToFit()
         
@@ -48,6 +54,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         navigationItem.titleView = self.searchBar
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: "mapTapped")
+        navigationItem.leftBarButtonItem!.tintColor = UIColor.whiteColor()
         
         
         
@@ -60,7 +68,11 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             self.filteredData = self.businesses
             self.tableView.reloadData()
             //businesses are arranged in the Yelp API by a code
+            
+            
         })
+        
+        
         
         
 
@@ -73,7 +85,87 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
                 print(business.address!)
             }
         }
+        
+        
 */
+        // set the region to display, this also sets a correct zoom level
+        // set starting center location in San Francisco
+        let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
+        goToLocation(centerLocation)
+        
+        /*let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: 37.7833, longitude: -122.4167)
+        annotation.title = "hello"
+        self.mapView.addAnnotation(annotation)*/
+        
+    
+    }
+    
+    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D, business: Business) {
+        business.annotation = MKPointAnnotation()
+        business.annotation!.coordinate = coordinate
+        business.annotation!.title = title
+        //self.mapViewSet(mapView, viewForAnnotation: business.annotation!, business: business )
+        self.mapView.addAnnotation(business.annotation!)
+        //print("ISITWORKING")
+    }
+    
+    /*func mapViewSet(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation, business: Business) -> MKAnnotationView? {
+        let identifier = "customAnnotationView"
+        if business.imageURL != nil {
+            
+        print(business.imageURL)
+        //let thumb = thumb.setImageWithURL(business.imageURL!)
+        // custom image annotation
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+        if (annotationView == nil) {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        }
+        else {
+            annotationView!.annotation = annotation
+        }
+        annotationView!.image = thumb.image
+        return annotationView
+        }
+        
+        return nil
+    }*/
+    
+    func mapTapped() {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.mapView.alpha = 1.0
+            self.tableView.alpha = 0.0
+            
+        })
+        
+        for business in filteredData {
+            self.addAnnotationAtCoordinate(business.geoLocation, business: business)
+            print(business.geoLocation)
+        }
+        
+        
+        
+    
+        self.searchBar.alpha = 0.0
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "List", style: .Plain, target: self, action: "listTapped")
+        navigationItem.leftBarButtonItem!.tintColor = UIColor.whiteColor()
+    }
+    
+    func listTapped() {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.mapView.alpha = 0.0
+            self.tableView.alpha = 1.0
+            
+        })
+        self.searchBar.alpha = 1.0
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: "mapTapped")
+        navigationItem.leftBarButtonItem!.tintColor = UIColor.whiteColor()
+    }
+    
+    func goToLocation(location: CLLocation) {
+        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let region = MKCoordinateRegionMake(location.coordinate, span)
+        mapView.setRegion(region, animated: false)
     }
     
     func loadMoreData() {
@@ -85,6 +177,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
                 //if let business.thumbImageView = business.thumbImageView? {
                     self.filteredData.append(business)
                 //}
+                
                 
             }
             self.businesses = self.filteredData
